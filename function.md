@@ -5,7 +5,7 @@
 This document provides detailed information on the API endpoints for the system managing interactions among Students, Sheikhs, Admins, and Parents. The API supports user authentication, session management, progress tracking, badge management, reporting, and notifications. All endpoints are prefixed with `/api`.
 
 ## Base URL
-`http:localhost:8080/`
+`http:localhost:8080/api`
 
 ## Authentication
 All endpoints require authentication unless specified. Use an API key in the `Authorization` header or Google OAuth token for specific endpoints.
