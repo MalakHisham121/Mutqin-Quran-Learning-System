@@ -777,6 +777,4 @@ View received notifications.
     -d '{"session_id": "123", "student_id": "456"}'
     ```
 
-For further details on xAI’s API services, visit https://x.ai/api.
-
 </xaiArtifact>
