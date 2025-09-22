@@ -1,16 +1,16 @@
 <xaiArtifact artifact_id="e38240ef-87d9-4572-90f3-8dd8482312ba" artifact_version_id="ccb195fa-55d7-4f8c-b5ec-1e39571293ea" title="api_documentation.md" contentType="text/markdown">
 
-# API Documentation for Student-Sheikh-Admin-Parent System
+# API Documentation for Student-Tutor-Admin-Parent System
 
 This document provides detailed information on the API endpoints for the system managing interactions among Students, Sheikhs, Admins, and Parents. The API supports user authentication, session management, progress tracking, badge management, reporting, and notifications. All endpoints are prefixed with `/api`.
 
 ## Base URL
-`http:localhost:8080/api`
+`http:localhost:8080/api/`
 
 ## Authentication
 All endpoints require authentication unless specified. Use an API key in the `Authorization` header or Google OAuth token for specific endpoints.
 
-- **Header**: `Authorization: Bearer <API_KEY>`
+- **Header**: `Authorization: Bearer <token>`
 - **Google OAuth**: Use `access_token` obtained from Google OAuth flow.
 
 ## Content Type
@@ -35,12 +35,8 @@ Authenticate a user with email and password.
 - **200 OK**:
   ```json
   {
-    "token": "string",
-    "user": {
-      "id": "string",
-      "role": "string (student|sheikh|admin|parent)",
-      "username": "string"
-    }
+   "type": "Bearer",
+    "token": "string"
   }
   ```
 - **400 Bad Request**: Invalid credentials.
@@ -50,12 +46,22 @@ Register a new user.
 
 **Request Body** (UserDTO):
 ```json
+some validation:
+username : unique notblank and notnull
+email: unique  notblank and notnul
+password : must complex notblank and notnul
+role must be  one of this types by this typing (ADMIN|TUTOR|PARENT|STUDENT) required
+age : not null
+phone : not null similar to this 11 letter similar to this structre +1234567890 or 123-456-7890 
+memorizationLevel : should added for student , nullable
+
 {
   "email": "string",
   "password": "string",
   "username": "string",
   "role": "string (student|sheikh|admin|parent)",
   "name": "string",
+  "age": int ,
   "phone": "string (optional)"
 }
 ```
@@ -64,58 +70,95 @@ Register a new user.
 - **201 Created**:
   ```json
   {
-    "id": "string",
     "message": "User created successfully"
   }
   ```
 - **400 Bad Request**: Invalid or missing fields.
 
-### POST /auth/google/login
+### POST /auth/oauth2/google/login
 Authenticate a user via Google OAuth.
-
-**Request Body**:
-```json
-{
-  "access_token": "string"
-}
-```
+frontend have to redirect to url int this response 
 
 **Response**:
 - **200 OK**:
   ```json
   {
-    "token": "string",
-    "user": {
-      "id": "string",
-      "role": "string",
-      "username": "string"
-    }
+     "follow this url in the browser": "http://localhost:8080/oauth2/authorization/google?action=login"
   }
   ```
-- **401 Unauthorized**: Invalid token.
+
+- after redirect to the following url and register with google 
+### GET http://localhost:8080/oauth2/authorization/google?action=login
+
+**Response**:
+- **200 OK**:
+  ```json
+  {
+    "success": true
+  ,
+  "message": "OAuth2 authentication successful"
+  ,
+  "token": "<Access token>"
+  ,
+  "email":"<user email>",
+  "googleId": "<user google id>"
+  
+  }
+  ```
+  - **400 Bad request**
+  ```json
+  {
+    "success": false
+  ,
+  "error": "string"
+  "message": "string"
+  
+  }
+  ```
+    
 
 ### POST /auth/google/signup
 Register a new user via Google OAuth.
 
-**Request Body**:
-```json
-{
-  "access_token": "string",
-  "role": "string (student|sheikh|admin|parent)"
-}
-```
+frontend have to redirect to url int this response 
 
 **Response**:
-- **201 Created**:
+- **200 OK**:
   ```json
   {
-    "id": "string",
-    "message": "User created successfully"
+     "follow this url in the browser": "http://localhost:8080/oauth2/authorization/google?action=login"
   }
   ```
-- **400 Bad Request**: Invalid token or role.
+- **401 Unauthorized**: Invalid token.
 
----
+- after redirect to the url and 
+### GET http://localhost:8080/oauth2/authorization/google?action=login
+
+**Response**:
+- **200 OK**:
+  ```json
+  {
+    "success": true
+  ,
+  "message": "OAuth2 authentication successful"
+  ,
+  "token": "<Access token>"
+  ,
+  "email":"<user email>",
+  "googleId": "<user google id>"
+  
+  }
+  ```
+  - **400 Bad request**
+  ```json
+  {
+    "success": false
+  ,
+  "error": "string"
+  "message": "string"
+  
+  }
+  ```
 
 ## Student Features
 
