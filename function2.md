@@ -46,7 +46,7 @@ Register a new user.
 
 **Request Body** (UserDTO):
 ```json
-some validation:
+{some validation:
 username : unique notblank and notnull
 email: unique  notblank and notnul
 password : must complex notblank and notnul
@@ -54,6 +54,7 @@ role must be  one of this types by this typing (ADMIN|TUTOR|PARENT|STUDENT) requ
 age : not null
 phone : not null similar to this 11 letter similar to this structre +1234567890 or 123-456-7890 
 memorizationLevel : should added for student , nullable
+}
 
 {
   "email": "string",
@@ -61,7 +62,7 @@ memorizationLevel : should added for student , nullable
   "username": "string",
   "role": "string (student|sheikh|admin|parent)",
   "name": "string",
-  "age": int ,
+  "age": "<int>" ,
   "phone": "string (optional)"
 }
 ```
@@ -110,7 +111,7 @@ frontend have to redirect to url int this response
   {
     "success": false
   ,
-  "error": "string"
+  "error": "string",
   "message": "string"
   
   }
@@ -126,13 +127,12 @@ frontend have to redirect to url int this response
 - **200 OK**:
   ```json
   {
-     "follow this url in the browser": "http://localhost:8080/oauth2/authorization/google?action=login"
+     "follow this url in the browser": "http://localhost:8080/oauth2/authorization/google"
   }
   ```
-- **401 Unauthorized**: Invalid token.
 
 - after redirect to the url and 
-### GET http://localhost:8080/oauth2/authorization/google?action=login
+### GET http://localhost:8080/oauth2/authorization/google
 
 **Response**:
 - **200 OK**:
@@ -154,11 +154,41 @@ frontend have to redirect to url int this response
   {
     "success": false
   ,
-  "error": "string"
+  "error": "string",
   "message": "string"
   
   }
   ```
+
+## Profile Feature
+
+### GET /profile/roles?role=<Role>
+get all users of specific role
+
+**Response**:
+- **200 OK**:
+  ```json
+  {
+    { UserDTO }
+  }
+  ```
+- **400 Bad Request**: you requested role is invalid
+  
+### GET /profile/user
+get user profile by his token from login
+you could get the token when you login 
+
+**Request Headers**
+- Authorization : Bearer <token>
+
+**Response**:
+- **200 OK**:
+  ```json
+  {
+    {UerDTO }
+  }
+  ```
+- **400 Bad Request**: invalid token
 
 ## Student Features
 
