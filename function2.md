@@ -298,8 +298,6 @@ get all preogress records for given sudent username
 - **400 Bad Request**: not found user with given usename
 
 
-  
-
 ## Student Features
 
 ### POST /students/sessions/book
@@ -363,63 +361,6 @@ Display sessions filtered by status and period.
   ]
   ```
 
-### PUT /students/profile
-Update student profile.
-
-**Request Body** (UserDTO):
-```json
-{
-  "user_id": "string",
-  "email": "string (optional)",
-  "username": "string (optional)",
-  "name": "string (optional)",
-  "phone": "string (optional)"
-}
-```
-
-**Response**:
-- **200 OK**:
-  ```json
-  {
-    "message": "Profile updated successfully"
-  }
-  ```
-- **400 Bad Request**: Invalid user ID or data.
-
-### DELETE /students/profile
-Delete student profile.
-
-**Request Body**:
-```json
-{
-  "user_id": "string"
-}
-```
-
-**Response**:
-- **200 OK**:
-  ```json
-  {
-    "message": "Profile deleted successfully"
-  }
-  ```
-- **404 Not Found**: User not found.
-
-### GET /students/profile/{username}
-View user profile details.
-
-**Response**:
-- **200 OK**:
-  ```json
-  {
-    "id": "string",
-    "username": "string",
-    "email": "string",
-    "name": "string",
-    "role": "string"
-  }
-  ```
-- **404 Not Found**: User not found.
 
 ### GET /students/search
 Search for user profiles.
@@ -454,23 +395,7 @@ Display student progress filtered by period.
     "pages_learned": "number",
     "period": "string"
   }
-  ```
 
-### GET /students/progress/all
-Display complete progress history.
-
-**Response**:
-- **200 OK**:
-  ```json
-  [
-    {
-      "date": "ISO8601 string",
-      "sessions_attended": "number",
-      "quizzes_completed": "number",
-      "pages_learned": "number"
-    }
-  ]
-  ```
 
 ### DELETE /students/sessions/cancel
 Cancel a session.
@@ -638,21 +563,6 @@ Display all sessions for a Sheikh.
   ]
   ```
 
-### GET /sheikhs/students/{student_id}/progress
-View a student’s progress.
-
-**Response**:
-- **200 OK**:
-  ```json
-  {
-    "student_id": "string",
-    "sessions_attended": "number",
-    "quizzes_completed": "number",
-    "pages_learned": "number"
-  }
-  ```
-- **404 Not Found**: Student not found.
-
 ### POST /sheikhs/reports
 Send a report to a parent.
 
@@ -676,129 +586,8 @@ Send a report to a parent.
   ```
 - **400 Bad Request**: Invalid report data.
 
-### POST /sheikhs/students/{student_id}/points
-Assign points to a student.
 
-**Request Body**:
-```json
-{
-  "points": "number"
-}
-```
 
-**Response**:
-- **200 OK**:
-  ```json
-  {
-    "message": "Points assigned successfully"
-  }
-  ```
-- **404 Not Found**: Student not found.
-
-### PUT /sheikhs/students/{student_id}/points
-Modify a student’s points.
-
-**Request Body**:
-```json
-{
-  "points": "number"
-}
-```
-
-**Response**:
-- **200 OK**:
-  ```json
-  {
-    "message": "Points updated successfully"
-  }
-  ```
-- **404 Not Found**: Student not found.
-
-### POST /sheikhs/students/{student_id}/pages
-Record pages learned for a student.
-
-**Request Body**:
-```json
-{
-  "pages_learned": "number"
-}
-```
-
-**Response**:
-- **200 OK**:
-  ```json
-  {
-    "message": "Pages recorded successfully"
-  }
-  ```
-- **404 Not Found**: Student not found.
-
----
-
-## Admin Features
-
-### GET /admin/profiles/{user_id}
-View user profile details.
-
-**Response**:
-- **200 OK**:
-  ```json
-  {
-    "id": "string",
-    "username": "string",
-    "email": "string",
-    "name": "string",
-    "role": "string"
-  }
-  ```
-- **404 Not Found**: User not found.
-
-### GET /admin/students
-List all registered students.
-
-**Response**:
-- **200 OK**:
-  ```json
-  [
-    {
-      "id": "string",
-      "username": "string",
-      "name": "string"
-    }
-  ]
-  ```
-
-### GET /admin/sheikhs
-List all registered Sheikhs.
-
-**Response**:
-- **200 OK**:
-  ```json
-  [
-    {
-      "id": "string",
-      "username": "string",
-      "name": "string"
-    }
-  ]
-  ```
-
-### GET /admin/parents
-List all registered parents.
-
-**Response**:
-- **200 OK**:
-  ```json
-  [
-    {
-      "id": "string",
-      "username": "string",
-      "name": "string"
-    }
-  ]
-  ```
-
----
 
 ## Parent Features
 
@@ -878,25 +667,7 @@ Automatically send reports to parents.
   }
   ```
 
-### POST /auto/notifications
-Send notifications to users.
 
-**Request Body** (Notification):
-```json
-{
-  "user_id": "string",
-  "content": "string"
-}
-```
-
-**Response**:
-- **200 OK**:
-  ```json
-  {
-    "notification_id": "string",
-    "message": "Notification sent successfully"
-  }
-  ```
 
 ### GET /auto/badges/{badge_id}
 Display a badge assigned by a Sheikh.
@@ -912,22 +683,7 @@ Display a badge assigned by a Sheikh.
   ```
 - **404 Not Found**: Badge not found.
 
-### GET /auto/notifications
-View received notifications.
 
-**Response**:
-- **200 OK**:
-  ```json
-  [
-    {
-      "notification_id": "string",
-      "content": "string",
-      "date": "ISO8601 string"
-    }
-  ]
-  ```
-
----
 
 ## Error Codes
 - **400 Bad Request**: Invalid or missing request parameters.
