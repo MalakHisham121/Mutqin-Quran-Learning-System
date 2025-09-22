@@ -189,6 +189,116 @@ you could get the token when you login
   }
   ```
 - **400 Bad Request**: invalid token
+  
+### GET /profile/search?emailOrUsername=<email or username>
+get user profile by his email or username
+
+**Response**:
+- **200 OK**:
+  ```json
+  {
+    {UerDTO }
+  }
+  ```
+- **400 Bad Request**: not found email neiter username
+  
+### PUT /profile
+update user profile by his token from login
+you could get the token when you login 
+
+**Request Headers**
+- Authorization : Bearer <token>
+
+**Request Body**
+ ```json
+  {
+    {UerDTO  fields you want to update}
+  }
+  ```
+
+**Response**:
+- **200 OK**:
+  ```json
+  {
+    {UerDTO }
+  }
+  ```
+- **400 Bad Request**: invalid token
+
+### DELETE /profile
+dalete user profile by his token from login
+you could get the token when you login 
+
+**Request Headers**
+- Authorization : Bearer <token>
+
+**Response**:
+- **200 OK**:
+  ```json
+  {
+    "Profile deleted successfully"
+  }
+  ```
+- **400 Bad Request**: invalid token
+
+## Notification
+
+### POST /notifications
+create new notification
+
+**Request Body**
+  ```json
+  
+{
+"message": "string",
+ "username": "string" 
+}  
+  ```
+
+
+### GET /notifications/{userid}
+get all notification for user by his id 
+
+**Response**:
+- **200 OK**:
+  ```json
+  {
+    { list of notifications}
+  }
+  ```
+- **400 Bad Request**: not found user with given id
+
+## Progress 
+
+### POST /tutor/progress/{username}
+create new progress record for given student username
+
+**Response**:
+- **200 OK**:
+```json
+{
+    "points": "int",
+     "memorizationLevel": "string", 
+     "numberOfSessionsAttended": "int",
+      "pagesLearned": "int"
+}
+  ```
+- **400 Bad Request**: not found user with given usename
+
+### GET /tutor/progress/{username}
+get all preogress records for given sudent username
+
+**Response**:
+- **200 OK**:
+```json
+{
+ {progress records}
+}
+  ```
+- **400 Bad Request**: not found user with given usename
+
+
+  
 
 ## Student Features
 
